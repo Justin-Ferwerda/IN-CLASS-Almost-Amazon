@@ -1,5 +1,6 @@
 import signOut from '../helpers/auth/signOut';
-
+import { showBooks } from '../components/pages/books';
+import { booksOnSale, getBooks } from '../../api/bookData';
 // navigation events
 const navigationEvents = () => {
   // LOGOUT BUTTON
@@ -8,12 +9,12 @@ const navigationEvents = () => {
 
   // TODO: BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    console.warn('CLICKED SALE BOOKS');
+    booksOnSale().then((booksArray) => showBooks(booksArray));
   });
 
   // TODO: ALL BOOKS
   document.querySelector('#all-books').addEventListener('click', () => {
-    console.warn('CLICKED ALL BOOKS');
+    getBooks().then((booksArray) => showBooks(booksArray));
   });
 
   // FIXME: STUDENTS Create an event listener for the Authors
