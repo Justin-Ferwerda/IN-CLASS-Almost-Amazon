@@ -1,6 +1,8 @@
 import signOut from '../helpers/auth/signOut';
 import { showBooks } from '../components/pages/books';
 import { booksOnSale, getBooks } from '../../api/bookData';
+import { getAuthors } from '../../api/authorData';
+import { showAuthors } from '../components/pages/authors';
 // navigation events
 const navigationEvents = () => {
   // LOGOUT BUTTON
@@ -22,7 +24,7 @@ const navigationEvents = () => {
   // 2. Convert the response to an array because that is what the makeAuthors function is expecting
   // 3. If the array is empty because there are no authors, make sure to use the emptyAuthor function
   document.querySelector('#authors').addEventListener('click', () => {
-    console.warn('CLICKED AUTHORS');
+    getAuthors().then((authorsArray) => showAuthors(authorsArray));
   });
 
   // STRETCH: SEARCH
