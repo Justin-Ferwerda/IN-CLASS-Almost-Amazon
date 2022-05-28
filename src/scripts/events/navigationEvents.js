@@ -1,7 +1,7 @@
 import signOut from '../helpers/auth/signOut';
 import { showBooks } from '../components/pages/books';
 import { booksOnSale, getBooks } from '../../api/bookData';
-import { getAuthors } from '../../api/authorData';
+import { getAuthors, getFavoriteAuthors } from '../../api/authorData';
 import { showAuthors } from '../components/pages/authors';
 // navigation events
 const navigationEvents = () => {
@@ -27,6 +27,9 @@ const navigationEvents = () => {
     getAuthors().then((authorsArray) => showAuthors(authorsArray));
   });
 
+  document.querySelector('#favorite-authors').addEventListener('click', () => {
+    getFavoriteAuthors().then((favAuthors) => showAuthors(favAuthors));
+  });
   // STRETCH: SEARCH
   document.querySelector('#search').addEventListener('keyup', (e) => {
     const searchValue = document.querySelector('#search').value.toLowerCase();
