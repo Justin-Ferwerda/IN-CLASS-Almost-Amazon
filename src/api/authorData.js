@@ -39,12 +39,12 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // FIXME: UPDATE AUTHOR
-const updateAuthor = (firebaseKey) => new Promise((resolve, reject) => {
-  axios.patch(`${dbUrl}/authors/${firebaseKey}.json`)
+const updateAuthor = (authorObject) => new Promise((resolve, reject) => {
+  axios.patch(`${dbUrl}/authors/${authorObject.firebaseKey}.json`, authorObject)
     .then(() => {
-      getAuthors().then((authorsArray) => resolve(authorsArray));
+      getAuthors().then(resolve);
     })
-    .catch((error) => reject(error));
+    .catch(reject);
 });
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
