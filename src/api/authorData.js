@@ -45,8 +45,15 @@ const updateAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: GET A SINGLE AUTHOR'S BOOKS
-const getAuthorBooks = () => (authorId) => new Promise((resolve, reject) => {
+const getAuthorBooks = (authorId) => new Promise((resolve, reject) => {
   axios.get(`${dbUrl}/books.json?orderBy="author_id"&equalTo="${authorId}"`)
+    .then((response) => resolve(Object.values(response.data)))
+    .catch((error) => reject(error));
+});
+
+// GET FAVORITE AUTHORS
+const getFavoriteAuthors = () => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors/.json?orderBy="favorite"&equalTo=true`)
     .then((response) => resolve(Object.values(response.data)))
     .catch((error) => reject(error));
 });
@@ -58,4 +65,5 @@ export {
   deleteSingleAuthor,
   updateAuthor,
   getAuthorBooks,
+  getFavoriteAuthors
 };
