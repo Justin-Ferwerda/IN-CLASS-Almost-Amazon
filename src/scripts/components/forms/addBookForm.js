@@ -3,7 +3,7 @@ import renderToDOM from '../../helpers/renderToDom';
 import selectAuthor from './selectAuthor';
 
 // USING THIS FORM FOR BOTH CREATE AND UPDATE
-const addBookForm = (userId, obj = {}) => {
+const addBookForm = (obj = {}) => {
   clearDom();
   const domString = `
     <form id="${obj.firebaseKey ? `update-book--${obj.firebaseKey}` : 'submit-book'}" class="mb-4">
@@ -34,7 +34,7 @@ const addBookForm = (userId, obj = {}) => {
     </form>`;
 
   renderToDOM('#form-container', domString);
-  selectAuthor(userId, `${obj.author_id || ''}`);
+  selectAuthor(`${obj.author_id || ''}`);
 };
 
 export default addBookForm;

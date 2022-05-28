@@ -27,12 +27,15 @@ const getSingleBook = (firebaseKey) => new Promise((resolve, reject) => {
 });
 
 // TODO: CREATE BOOK
-const createBook = () => new Promise((resolve, reject) => {
-  axios.post(`${dbUrl}/books.json`)
-    .then(() => {
-      getBooks().then((booksArray) => resolve(booksArray));
-    })
-    .catch((error) => reject(error));
+const createBook = (bookObj) => new Promise((resolve, reject) => {
+  axios.post(`${dbUrl}/books.json`, bookObj)
+    .then((response) => {
+      const payload = { firebaseKey: response.data.name };
+      axios.patch(`${dbUrl}/books/${response.data.name}.json`, payload)
+        .then(() => {
+          getBooks().then(resolve);
+        });
+    }).catch(reject);
 });
 
 // TODO: UPDATE BOOK
