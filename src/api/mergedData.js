@@ -15,7 +15,7 @@ const viewBookDetails = (bookFirebaseKey) => new Promise((resolve, reject) => {
 const getAuthorsBooks = (authorId) => new Promise((resolve, reject) => {
   getSingleAuthor(authorId)
     .then((authorObject) => {
-      getAuthorBooks(authorObject.firebaseKey)
+      getAuthorBooks(authorId)
         .then((authorBookObject) => {
           resolve({ authorBookObject, ...authorObject });
         })
