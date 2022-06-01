@@ -4,8 +4,8 @@ import firebaseConfig from './apiKeys';
 const dbUrl = firebaseConfig.databaseURL;
 
 // FIXME:  GET ALL AUTHORS
-const getAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors.json`)
+const getAuthors = (uid) => new Promise((resolve, reject) => {
+  axios.get(`${dbUrl}/authors/.json?orderBy="uid"&equalTo="${uid}"`)
     .then((response) => {
       if (response.data) {
         resolve(Object.values(response.data));
@@ -23,7 +23,7 @@ const createAuthor = (authorObj) => new Promise((resolve, reject) => {
       const payload = { firebaseKey: response.data.name };
       axios.patch(`${dbUrl}/authors/${response.data.name}.json`, payload)
         .then(() => {
-          getAuthors(authorObj.firebaseKey).then(resolve);
+          getAuthors(authorObj.uid).then(resolve);
         });
     }).catch(reject);
 });
@@ -39,7 +39,7 @@ const getSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/authors/${firebaseKey}.json`)
     .then(() => {
-      getAuthors().then((authorsArray) => resolve(authorsArray));
+      getAuthors(firebaseKey.uid).then((authorsArray) => resolve(authorsArray));
     })
     .catch((error) => reject(error));
 });
@@ -48,7 +48,7 @@ const deleteSingleAuthor = (firebaseKey) => new Promise((resolve, reject) => {
 const updateAuthor = (authorObject) => new Promise((resolve, reject) => {
   axios.patch(`${dbUrl}/authors/${authorObject.firebaseKey}.json`, authorObject)
     .then(() => {
-      getAuthors().then(resolve);
+      getAuthors(authorObject.uid).then(resolve);
     })
     .catch(reject);
 });
