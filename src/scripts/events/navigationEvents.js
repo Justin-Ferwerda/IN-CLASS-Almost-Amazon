@@ -11,7 +11,7 @@ const navigationEvents = (uid) => {
 
   // TODO: BOOKS ON SALE
   document.querySelector('#sale-books').addEventListener('click', () => {
-    booksOnSale().then((booksArray) => showBooks(booksArray));
+    booksOnSale(uid).then((booksArray) => showBooks(booksArray));
   });
 
   // TODO: ALL BOOKS

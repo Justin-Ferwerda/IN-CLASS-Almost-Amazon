@@ -20,7 +20,7 @@ const getBooks = (uid) => new Promise((resolve, reject) => {
 const deleteBook = (firebaseKey) => new Promise((resolve, reject) => {
   axios.delete(`${dbUrl}/books/${firebaseKey}.json`)
     .then(() => {
-      getBooks(firebaseKey.uid).then((booksArray) => resolve(booksArray));
+      getBooks(firebaseKey).then((booksArray) => resolve(booksArray));
     })
     .catch((error) => reject(error));
 });
@@ -54,10 +54,12 @@ const updateBook = (bookObj) => new Promise((resolve, reject) => {
 });
 
 // TODO: FILTER BOOKS ON SALE
-const booksOnSale = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/books/.json?orderBy="sale"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const booksOnSale = (uid) => new Promise((resolve, reject) => {
+  getBooks(uid)
+    .then((response) => {
+      const favoriteBooks = response.filter((book) => book.sale);
+      resolve(favoriteBooks);
+    }).catch((error) => reject(error));
 });
 
 // TODO: STRETCH...SEARCH BOOKS

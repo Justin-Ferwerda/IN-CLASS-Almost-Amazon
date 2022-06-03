@@ -61,10 +61,12 @@ const getAuthorBooks = (authorId) => new Promise((resolve, reject) => {
 });
 
 // GET FAVORITE AUTHORS
-const getFavoriteAuthors = () => new Promise((resolve, reject) => {
-  axios.get(`${dbUrl}/authors/.json?orderBy="favorite"&equalTo=true`)
-    .then((response) => resolve(Object.values(response.data)))
-    .catch((error) => reject(error));
+const getFavoriteAuthors = (uid) => new Promise((resolve, reject) => {
+  getAuthors(uid)
+    .then((authors) => {
+      const favoriteAuthors = authors.filter((author) => author.favorite);
+      resolve(favoriteAuthors);
+    }).catch((error) => reject(error));
 });
 
 export {
